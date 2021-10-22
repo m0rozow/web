@@ -71,3 +71,28 @@ nav > ul > li > a{
 nav > ul > li > a:hover{
     background-color: burlywood;
 }
+
+.string {
+margin-bottom: 10px;
+display: flex;
+}
+
+.string > label {
+flex-basis: 68px;
+margin-bottom: 10px;
+flex-shrink: 0;    
+}
+
+.string > input {
+flex-basis: 200px;
+margin-bottom: auto;
+flex-grow: 1;   
+}
+
+.buttons {
+justify-content: center;
+}
+
+.reg-wrapper {
+    width: 400px;
+}

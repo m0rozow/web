@@ -2,9 +2,6 @@
 
 $title = "Главная страница";
 
-require "template/header.php";
-require "template/sidebar.php";
-
 $url = explode("?", $_SERVER["REQUEST_URI"]);
 $url = urldecode($url[0]);
 $url = explode("/", $url);
@@ -12,7 +9,7 @@ $url = array_pop($url);
 
 $pagelink = $url == "" ? "index" : $url;
 
-if (!file_exists("contents/$pagelink.php"));
+if (!file_exists("contents/$pagelink.php"))
 $pagelink = "404";
 
 switch($pagelink)
