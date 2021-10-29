@@ -78,7 +78,7 @@ display: flex;
 }
 
 .string > label {
-flex-basis: 68px;
+flex-basis: 130px;
 margin-bottom: 10px;
 flex-shrink: 0;    
 }
@@ -93,6 +93,20 @@ flex-grow: 1;
 justify-content: center;
 }
 
+input[type="reset"]{
+    flex-grow: 0;
+    flex-basis: auto;
+}
+.agreement {
+    justify-content: center;
+    margin-bottom: 10px;
+    display: flex;
+    }
+
 .reg-wrapper {
     width: 400px;
+}
+
+.string>select {
+    width: 300px;
 }

@@ -5,7 +5,8 @@
         <title>Главная страница</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="shortcut icon" href="icon.png" type="image/x-icon">
-        <script srt="js.jquery.min.js" defer></script>
+        <script src="js/jquery.min.js" defer></script>
+        <script src="js/reg.js" defer></script>
     </head>
     <body>
         <header>
