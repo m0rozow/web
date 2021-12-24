@@ -17,8 +17,8 @@ class Base
 
     public function saveUser($name, $login, $password)
     {
-        $query = $this->prepare("INSERT INTO 
-        'users'(`name`, `login`, `password`) 
+        $query = $this->base->prepare("INSERT INTO 
+        `users`(`name`, `login`, `password`) 
         VALUES (:name, :login, :password);");
 
         $query->bindValue(":login", $login);
