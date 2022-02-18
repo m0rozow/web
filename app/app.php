@@ -1,13 +1,28 @@
 <?php
-session_start();
 
 require_once "router.php";
 require_once "base.php";
 require_once "user.php";
 
+require_once("session.php");
+$session = new Session();
+//session_start();
+
 $ur1 = Router::parse();
 
 $pagelink = $ur1 == "" ? "index": $ur1;
+
+if($pagelink == "logout")
+{
+    $session->removeData("user");
+    //unset($_SESSION["user"]);
+    header("location: ". SITE_DIR);
+}
+
+if($pagelink == "user" && !$session->existsData("user"))
+{
+    header("location: ". SITE_DIR);
+}
 
 if (!file_exists("contents/$pagelink.php"))
 $pagelink = "404";
@@ -40,10 +55,10 @@ if(isset($_POST["entrance"]))
         $info = "Не верный логин или пароль";
     else
     {
-        //$session->addData("user", $user);
-        $_SESSOIN["user"] = $user;
-        //header("location: " . SITE_DIR . "user");
-        $info = "Вы вошли под именем " . $user->getName();
+        $session->addData("user", $user);
+        //$_SESSION["user"] = $user;
+        header("location: " . SITE_DIR . "user");
+        //$info = "Вы вошли под именем " . $user->getName();
     }
 
 }
@@ -80,7 +95,10 @@ switch($pagelink)
     case "registration":
         $title="Регистрация";
         break;
-    default: 
+    case "account":
+        $title="Личный кабинет";
+        break;
+    default:
         $title="Ошибка";
 }
 

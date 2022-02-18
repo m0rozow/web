@@ -11,18 +11,15 @@
     <body>
         <header>
             <div class="title">WEB-программирование</div>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="index">Главная</a>
-                    </li>
-                    <li>
-                        <a href="login">Вход</a>
-                    </li>
-                    <li>
-                        <a href="registration">Регистрация</a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="menu">
+            <?php require_once("menu.php");?>
+
+            <?php if($session->existsData("user")): ?>
+                <a href="<?=SITE_DIR?>user"><?=$session->getData("user")->getName()?></a>
+                <a href="<?=SITE_DIR?>logout">Выйти</a>
+            <?php else:?>
+                <a href="<?=SITE_DIR?>login">Войти</a>
+            <?php endif;?>
+            </div>
         </header>
         <main>
