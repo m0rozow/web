@@ -1,8 +1,10 @@
 <?php
+session_start();
 
 require_once "router.php";
 require_once "base.php";
 require_once "user.php";
+
 $ur1 = Router::parse();
 
 $pagelink = $ur1 == "" ? "index": $ur1;
@@ -39,7 +41,7 @@ if(isset($_POST["entrance"]))
     else
     {
         //$session->addData("user", $user);
-        //$_SESSOIN["user"] = $user;
+        $_SESSOIN["user"] = $user;
         //header("location: " . SITE_DIR . "user");
         $info = "Вы вошли под именем " . $user->getName();
     }
