@@ -1,12 +1,11 @@
 <?php
 
-$title = "Главная страница";
-
 require_once "router.php";
 require_once "base.php";
-$url = Router::parse();
+require_once "user.php";
+$ur1 = Router::parse();
 
-$pagelink = $url == "" ? "index" : $url;
+$pagelink = $ur1 == "" ? "index": $ur1;
 
 if (!file_exists("contents/$pagelink.php"))
 $pagelink = "404";
@@ -16,8 +15,6 @@ $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ];
-    
-
 
 $connection = [
     "dsn" => "mysql: host=localhost; dbname=web; charset=utf8",
@@ -25,12 +22,29 @@ $connection = [
     "password" => "root",
     "options" => $options
 ];
+unset($options);
 
-unset ($options);
+$base = new Base($connection);
 
-$base = new Base ($connection);
+unset($connection);
 
-unset ($connection);
+if(isset($_POST["entrance"]))
+{
+    $login = $_POST["login"];
+    $password = $_POST["password"];
+    $user = $base->loadUser($login,$password);
+
+    if($user == false)
+        $info = "Не верный логин или пароль";
+    else
+    {
+        //$session->addData("user", $user);
+        //$_SESSOIN["user"] = $user;
+        //header("location: " . SITE_DIR . "user");
+        $info = "Вы вошли под именем " . $user->getName();
+    }
+
+}
 
 if(isset($_POST["send"]))
 {
@@ -38,37 +52,35 @@ if(isset($_POST["send"]))
     $login = $_POST["login"];
     $password = $_POST["password"];
     $password2 = $_POST["one_more_pass"];
-  
+
     if($password != $password2)
         $info = "Пароли не совпали!";
     else
     {
-        $userData = $base->saveUser($name, $login, $password);
-        if($userData == false)
-            $info = "Не зарегистрирован";
-        else
-            $info = "Зарегистрирован";
+        $user = new User($name,$login,$password);
+        $userData = $base->saveUser($user);
+        if( $userData == false)
+            $info = "Не зарегистрированы";
+        else 
+             $info = "Зарегистрированы";
     }
-
-  
 }
+
 
 switch($pagelink)
 {
     case "index":
-        $title = "Главная страница";
+        $title="Главная страница";
         break;
     case "login":
-        $title = "Вход";
+        $title="Авторизация";
         break;
     case "registration":
-        $title = "Регистрация";
-        break; 
-    default:
-        $title = "Ошибка";
+        $title="Регистрация";
+        break;
+    default: 
+        $title="Ошибка";
 }
-
-$title = "Главная страница";
 
 require "template/header.php";
 require "template/sidebar.php";
